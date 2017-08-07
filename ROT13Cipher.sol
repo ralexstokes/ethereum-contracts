@@ -6,19 +6,28 @@ contract ROT13Cipher {
   event Encode(bytes indexed message, bytes encodedMessage);
 
   uint8 private shift = 0xD;
-  uint8 private modulo = shift * 2;
+  uint8 private modulus = shift * 2;
 
-  function encodeASCII(bytes _input) constant returns (bytes) {
-    bytes memory output = new bytes(_input.length);
-
-    for (uint i = 0; i < 32; i++) {
-      uint8 next = uint8(_input[i]);
-      next = next + shift;
-      next = next % modulo;
-      output[i] = byte(next);
+  function encodeASCIIString(bytes _input) constant returns (bytes) {
+    if (_input.length > 256) {
+      throw; // do not overflow for-loop counter
     }
+
+    bytes output = new bytes(_input.length);
+
+    for (uint i = 0; i < _input.length; i++) {
+      output[i] = encodeCharacter(_input[i]);
+    }
+
     Encode(_input, output);
 
     return output;
+  }
+
+  function encodeCharacter(byte input) private constant returns (byte) {
+    uint8 next = uint8(_input[i]);
+    next = next + shift;
+    next = next % modulus;
+    return byte(next);
   }
 }
