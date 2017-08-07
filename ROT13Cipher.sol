@@ -13,7 +13,7 @@ contract ROT13Cipher {
       throw; // do not overflow for-loop counter
     }
 
-    bytes output = new bytes(_input.length);
+    bytes memory output = new bytes(_input.length);
 
     for (uint i = 0; i < _input.length; i++) {
       output[i] = encodeCharacter(_input[i]);
