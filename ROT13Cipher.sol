@@ -25,7 +25,7 @@ contract ROT13Cipher {
   }
 
   function encodeCharacter(byte input) private constant returns (byte) {
-    uint8 next = uint8(_input[i]);
+    uint8 next = uint8(input);
     next = next + shift;
     next = next % modulus;
     return byte(next);
